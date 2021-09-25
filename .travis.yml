@@ -17,4 +17,4 @@ after_success:
   - docker push thewolverine/multi-client
   - docker push thewolverine/multi-nginx
   - docker push thewolverine/multi-server
-  - docker push thewolverinemulti-worker
+  - docker push thewolverine/multi-worker
