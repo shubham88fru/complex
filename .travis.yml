@@ -1,0 +1,20 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t thewolverine/multi-client-test -f ./client/Dockerfile.dev ./client
+
+scripts:
+  - docker run -e CI=true thewolverine/multi-client-test npm run test -- --coverage
+
+after_success:
+  - docker build -t thewolverine/multi-client ./client
+  - docker build -t thewolverine/multi-nginx ./nginx
+  - docker build -t thewolverine/multi-server ./server
+  - docker build -t thewolverine/multi-worker ./worker
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - docker push thewolverine/multi-client
+  - docker push thewolverine/multi-nginx
+  - docker push thewolverine/multi-server
+  - docker push thewolverinemulti-worker
