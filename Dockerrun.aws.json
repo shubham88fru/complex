@@ -4,7 +4,33 @@
     {
       "name": "client",
       "image": "thewolverine/multi-client",
-      "hostname": "client"
+      "hostname": "client",
+      "essential": false
+    },
+    {
+      "name": "server",
+      "image": "thewolverine/multi-server",
+      "hostname": "api",
+      "essential": false
+    },
+    {
+      "name": "worker",
+      "image": "thewolverine/multi-worker",
+      "hostname": "worker",
+      "essential": false
+    },
+    {
+      "name": "nginx",
+      "image": "thewolverine/multi-nginx",
+      "hostname": "nginx",
+      "essential": true,
+      "portMappings": [
+        {
+          "hostPort": 80,
+          "containerPort": 80
+        }
+      ],
+      "links": ["server", "client"]
     }
   ]
 }
